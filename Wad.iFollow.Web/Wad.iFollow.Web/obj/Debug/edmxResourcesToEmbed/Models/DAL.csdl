@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ifollowdatabaseModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ifollowdatabaseEntities1" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="comments" EntityType="ifollowdatabaseModel.comment" />
+    <EntitySet Name="emails" EntityType="ifollowdatabaseModel.email" />
+    <EntitySet Name="followers" EntityType="ifollowdatabaseModel.follower" />
+    <EntitySet Name="images" EntityType="ifollowdatabaseModel.image" />
+    <EntitySet Name="notifications" EntityType="ifollowdatabaseModel.notification" />
+    <EntitySet Name="posts" EntityType="ifollowdatabaseModel.post" />
+    <EntitySet Name="ratings" EntityType="ifollowdatabaseModel.rating" />
+    <EntitySet Name="users" EntityType="ifollowdatabaseModel.user" />
+    <AssociationSet Name="FK_comments_postId" Association="ifollowdatabaseModel.FK_comments_postId">
+      <End Role="posts" EntitySet="posts" />
+      <End Role="comments" EntitySet="comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_comments_userId" Association="ifollowdatabaseModel.FK_comments_userId">
+      <End Role="users" EntitySet="users" />
+      <End Role="comments" EntitySet="comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_notificatons_commentId" Association="ifollowdatabaseModel.FK_notificatons_commentId">
+      <End Role="comments" EntitySet="comments" />
+      <End Role="notifications" EntitySet="notifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_emails_ownerId" Association="ifollowdatabaseModel.FK_emails_ownerId">
+      <End Role="users" EntitySet="users" />
+      <End Role="emails" EntitySet="emails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_followers_followedId" Association="ifollowdatabaseModel.FK_followers_followedId">
+      <End Role="users" EntitySet="users" />
+      <End Role="followers" EntitySet="followers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_followers_followerId" Association="ifollowdatabaseModel.FK_followers_followerId">
+      <End Role="users" EntitySet="users" />
+      <End Role="followers" EntitySet="followers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_images_ownerId" Association="ifollowdatabaseModel.FK_images_ownerId">
+      <End Role="users" EntitySet="users" />
+      <End Role="images" EntitySet="images" />
+    </AssociationSet>
+    <AssociationSet Name="FK_posts_imageId" Association="ifollowdatabaseModel.FK_posts_imageId">
+      <End Role="images" EntitySet="images" />
+      <End Role="posts" EntitySet="posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_notifications_ownerId" Association="ifollowdatabaseModel.FK_notifications_ownerId">
+      <End Role="users" EntitySet="users" />
+      <End Role="notifications" EntitySet="notifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_notifications_postId" Association="ifollowdatabaseModel.FK_notifications_postId">
+      <End Role="posts" EntitySet="posts" />
+      <End Role="notifications" EntitySet="notifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_notifications_userId" Association="ifollowdatabaseModel.FK_notifications_userId">
+      <End Role="users" EntitySet="users" />
+      <End Role="notifications" EntitySet="notifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_posts_ownerId" Association="ifollowdatabaseModel.FK_posts_ownerId">
+      <End Role="users" EntitySet="users" />
+      <End Role="posts" EntitySet="posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ratings_postId" Association="ifollowdatabaseModel.FK_ratings_postId">
+      <End Role="posts" EntitySet="posts" />
+      <End Role="ratings" EntitySet="ratings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ratings_userId" Association="ifollowdatabaseModel.FK_ratings_userId">
+      <End Role="users" EntitySet="users" />
+      <End Role="ratings" EntitySet="ratings" />
+    </AssociationSet>
+    <AssociationSet Name="sharedposts" Association="ifollowdatabaseModel.sharedposts">
+      <End Role="posts" EntitySet="posts" />
+      <End Role="users" EntitySet="users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="comment">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="userId" Type="Int64" Nullable="false" />
+    <Property Name="postId" Type="Int64" Nullable="false" />
+    <Property Name="message" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="dateCreated" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="post" Relationship="ifollowdatabaseModel.FK_comments_postId" FromRole="comments" ToRole="posts" />
+    <NavigationProperty Name="user" Relationship="ifollowdatabaseModel.FK_comments_userId" FromRole="comments" ToRole="users" />
+    <NavigationProperty Name="notifications" Relationship="ifollowdatabaseModel.FK_notificatons_commentId" FromRole="comments" ToRole="notifications" />
+  </EntityType>
+  <EntityType Name="email">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="type" Type="Int32" />
+    <Property Name="ownerId" Type="Int64" Nullable="false" />
+    <Property Name="message" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="isDeleted" Type="Boolean" />
+    <NavigationProperty Name="user" Relationship="ifollowdatabaseModel.FK_emails_ownerId" FromRole="emails" ToRole="users" />
+  </EntityType>
+  <EntityType Name="follower">
+    <Key>
+      <PropertyRef Name="followedId" />
+      <PropertyRef Name="followerId" />
+    </Key>
+    <Property Name="followedId" Type="Int64" Nullable="false" />
+    <Property Name="followerId" Type="Int64" Nullable="false" />
+    <Property Name="isBlocked" Type="Boolean" />
+    <NavigationProperty Name="user" Relationship="ifollowdatabaseModel.FK_followers_followedId" FromRole="followers" ToRole="users" />
+    <NavigationProperty Name="user1" Relationship="ifollowdatabaseModel.FK_followers_followerId" FromRole="followers" ToRole="users" />
+  </EntityType>
+  <EntityType Name="image">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="url" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+    <Property Name="ownerId" Type="Int64" Nullable="false" />
+    <Property Name="isAvatar" Type="Boolean" />
+    <Property Name="isDeleted" Type="Boolean" />
+    <NavigationProperty Name="user" Relationship="ifollowdatabaseModel.FK_images_ownerId" FromRole="images" ToRole="users" />
+    <NavigationProperty Name="posts" Relationship="ifollowdatabaseModel.FK_posts_imageId" FromRole="images" ToRole="posts" />
+  </EntityType>
+  <EntityType Name="notification">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="ownerId" Type="Int64" Nullable="false" />
+    <Property Name="type" Type="Int32" />
+    <Property Name="rating" Type="Single" />
+    <Property Name="commentId" Type="Int64" />
+    <Property Name="postId" Type="Int64" />
+    <Property Name="userId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="comment" Relationship="ifollowdatabaseModel.FK_notificatons_commentId" FromRole="notifications" ToRole="comments" />
+    <NavigationProperty Name="user" Relationship="ifollowdatabaseModel.FK_notifications_ownerId" FromRole="notifications" ToRole="users" />
+    <NavigationProperty Name="post" Relationship="ifollowdatabaseModel.FK_notifications_postId" FromRole="notifications" ToRole="posts" />
+    <NavigationProperty Name="user1" Relationship="ifollowdatabaseModel.FK_notifications_userId" FromRole="notifications" ToRole="users" />
+  </EntityType>
+  <EntityType Name="post">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="message" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ownerId" Type="Int64" Nullable="false" />
+    <Property Name="imageId" Type="Int64" />
+    <Property Name="dateCreated" Type="DateTime" Precision="0" />
+    <Property Name="rating" Type="Single" />
+    <Property Name="isDeleted" Type="Boolean" />
+    <NavigationProperty Name="comments" Relationship="ifollowdatabaseModel.FK_comments_postId" FromRole="posts" ToRole="comments" />
+    <NavigationProperty Name="image" Relationship="ifollowdatabaseModel.FK_posts_imageId" FromRole="posts" ToRole="images" />
+    <NavigationProperty Name="notifications" Relationship="ifollowdatabaseModel.FK_notifications_postId" FromRole="posts" ToRole="notifications" />
+    <NavigationProperty Name="user" Relationship="ifollowdatabaseModel.FK_posts_ownerId" FromRole="posts" ToRole="users" />
+    <NavigationProperty Name="ratings" Relationship="ifollowdatabaseModel.FK_ratings_postId" FromRole="posts" ToRole="ratings" />
+    <NavigationProperty Name="users" Relationship="ifollowdatabaseModel.sharedposts" FromRole="posts" ToRole="users" />
+  </EntityType>
+  <EntityType Name="rating">
+    <Key>
+      <PropertyRef Name="userId" />
+      <PropertyRef Name="postId" />
+    </Key>
+    <Property Name="userId" Type="Int64" Nullable="false" />
+    <Property Name="postId" Type="Int64" Nullable="false" />
+    <Property Name="value" Type="Int32" />
+    <NavigationProperty Name="post" Relationship="ifollowdatabaseModel.FK_ratings_postId" FromRole="ratings" ToRole="posts" />
+    <NavigationProperty Name="user" Relationship="ifollowdatabaseModel.FK_ratings_userId" FromRole="ratings" ToRole="users" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="firstName" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+    <Property Name="lastName" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+    <Property Name="confirmationKey" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+    <Property Name="registrationDate" Type="DateTime" p1:StoreGeneratedPattern="Identity" Precision="0" />
+    <Property Name="country" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+    <Property Name="city" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+    <Property Name="birthdate" Type="DateTime" Precision="0" />
+    <Property Name="isConfirmed" Type="Boolean" />
+    <Property Name="isDeleted" Type="Boolean" />
+    <Property Name="enabledNotif" Type="Boolean" />
+    <NavigationProperty Name="comments" Relationship="ifollowdatabaseModel.FK_comments_userId" FromRole="users" ToRole="comments" />
+    <NavigationProperty Name="emails" Relationship="ifollowdatabaseModel.FK_emails_ownerId" FromRole="users" ToRole="emails" />
+    <NavigationProperty Name="followers" Relationship="ifollowdatabaseModel.FK_followers_followedId" FromRole="users" ToRole="followers" />
+    <NavigationProperty Name="followers1" Relationship="ifollowdatabaseModel.FK_followers_followerId" FromRole="users" ToRole="followers" />
+    <NavigationProperty Name="images" Relationship="ifollowdatabaseModel.FK_images_ownerId" FromRole="users" ToRole="images" />
+    <NavigationProperty Name="notifications" Relationship="ifollowdatabaseModel.FK_notifications_ownerId" FromRole="users" ToRole="notifications" />
+    <NavigationProperty Name="notifications1" Relationship="ifollowdatabaseModel.FK_notifications_userId" FromRole="users" ToRole="notifications" />
+    <NavigationProperty Name="posts" Relationship="ifollowdatabaseModel.FK_posts_ownerId" FromRole="users" ToRole="posts" />
+    <NavigationProperty Name="ratings" Relationship="ifollowdatabaseModel.FK_ratings_userId" FromRole="users" ToRole="ratings" />
+    <NavigationProperty Name="posts1" Relationship="ifollowdatabaseModel.sharedposts" FromRole="users" ToRole="posts" />
+  </EntityType>
+  <Association Name="FK_comments_postId">
+    <End Role="posts" Type="ifollowdatabaseModel.post" Multiplicity="1" />
+    <End Role="comments" Type="ifollowdatabaseModel.comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="posts">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="comments">
+        <PropertyRef Name="postId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_comments_userId">
+    <End Role="users" Type="ifollowdatabaseModel.user" Multiplicity="1" />
+    <End Role="comments" Type="ifollowdatabaseModel.comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="comments">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_notificatons_commentId">
+    <End Role="comments" Type="ifollowdatabaseModel.comment" Multiplicity="0..1" />
+    <End Role="notifications" Type="ifollowdatabaseModel.notification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="comments">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="notifications">
+        <PropertyRef Name="commentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_emails_ownerId">
+    <End Role="users" Type="ifollowdatabaseModel.user" Multiplicity="1" />
+    <End Role="emails" Type="ifollowdatabaseModel.email" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="emails">
+        <PropertyRef Name="ownerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_followers_followedId">
+    <End Role="users" Type="ifollowdatabaseModel.user" Multiplicity="1" />
+    <End Role="followers" Type="ifollowdatabaseModel.follower" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="followers">
+        <PropertyRef Name="followedId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_followers_followerId">
+    <End Role="users" Type="ifollowdatabaseModel.user" Multiplicity="1" />
+    <End Role="followers" Type="ifollowdatabaseModel.follower" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="followers">
+        <PropertyRef Name="followerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_images_ownerId">
+    <End Role="users" Type="ifollowdatabaseModel.user" Multiplicity="1" />
+    <End Role="images" Type="ifollowdatabaseModel.image" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="images">
+        <PropertyRef Name="ownerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_posts_imageId">
+    <End Role="images" Type="ifollowdatabaseModel.image" Multiplicity="0..1" />
+    <End Role="posts" Type="ifollowdatabaseModel.post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="images">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="posts">
+        <PropertyRef Name="imageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_notifications_ownerId">
+    <End Role="users" Type="ifollowdatabaseModel.user" Multiplicity="1" />
+    <End Role="notifications" Type="ifollowdatabaseModel.notification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="notifications">
+        <PropertyRef Name="ownerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_notifications_postId">
+    <End Role="posts" Type="ifollowdatabaseModel.post" Multiplicity="0..1" />
+    <End Role="notifications" Type="ifollowdatabaseModel.notification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="posts">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="notifications">
+        <PropertyRef Name="postId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_notifications_userId">
+    <End Role="users" Type="ifollowdatabaseModel.user" Multiplicity="1" />
+    <End Role="notifications" Type="ifollowdatabaseModel.notification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="notifications">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_posts_ownerId">
+    <End Role="users" Type="ifollowdatabaseModel.user" Multiplicity="1" />
+    <End Role="posts" Type="ifollowdatabaseModel.post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="posts">
+        <PropertyRef Name="ownerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ratings_postId">
+    <End Role="posts" Type="ifollowdatabaseModel.post" Multiplicity="1" />
+    <End Role="ratings" Type="ifollowdatabaseModel.rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="posts">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ratings">
+        <PropertyRef Name="postId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ratings_userId">
+    <End Role="users" Type="ifollowdatabaseModel.user" Multiplicity="1" />
+    <End Role="ratings" Type="ifollowdatabaseModel.rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ratings">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="sharedposts">
+    <End Role="posts" Type="ifollowdatabaseModel.post" Multiplicity="*" />
+    <End Role="users" Type="ifollowdatabaseModel.user" Multiplicity="*" />
+  </Association>
+</Schema>

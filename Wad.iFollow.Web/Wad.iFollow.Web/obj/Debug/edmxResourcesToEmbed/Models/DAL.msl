@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ifollowdatabaseModelStoreContainer" CdmEntityContainer="ifollowdatabaseEntities1">
+    <EntitySetMapping Name="comments">
+      <EntityTypeMapping TypeName="ifollowdatabaseModel.comment">
+        <MappingFragment StoreEntitySet="comments">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="postId" ColumnName="postId" />
+          <ScalarProperty Name="message" ColumnName="message" />
+          <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="emails">
+      <EntityTypeMapping TypeName="ifollowdatabaseModel.email">
+        <MappingFragment StoreEntitySet="emails">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="ownerId" ColumnName="ownerId" />
+          <ScalarProperty Name="message" ColumnName="message" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="followers">
+      <EntityTypeMapping TypeName="ifollowdatabaseModel.follower">
+        <MappingFragment StoreEntitySet="followers">
+          <ScalarProperty Name="followedId" ColumnName="followedId" />
+          <ScalarProperty Name="followerId" ColumnName="followerId" />
+          <ScalarProperty Name="isBlocked" ColumnName="isBlocked" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="images">
+      <EntityTypeMapping TypeName="ifollowdatabaseModel.image">
+        <MappingFragment StoreEntitySet="images">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="ownerId" ColumnName="ownerId" />
+          <ScalarProperty Name="isAvatar" ColumnName="isAvatar" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="notifications">
+      <EntityTypeMapping TypeName="ifollowdatabaseModel.notification">
+        <MappingFragment StoreEntitySet="notifications">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ownerId" ColumnName="ownerId" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
+          <ScalarProperty Name="commentId" ColumnName="commentId" />
+          <ScalarProperty Name="postId" ColumnName="postId" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="posts">
+      <EntityTypeMapping TypeName="ifollowdatabaseModel.post">
+        <MappingFragment StoreEntitySet="posts">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="message" ColumnName="message" />
+          <ScalarProperty Name="ownerId" ColumnName="ownerId" />
+          <ScalarProperty Name="imageId" ColumnName="imageId" />
+          <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ratings">
+      <EntityTypeMapping TypeName="ifollowdatabaseModel.rating">
+        <MappingFragment StoreEntitySet="ratings">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="postId" ColumnName="postId" />
+          <ScalarProperty Name="value" ColumnName="value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="ifollowdatabaseModel.user">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="confirmationKey" ColumnName="confirmationKey" />
+          <ScalarProperty Name="registrationDate" ColumnName="registrationDate" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+          <ScalarProperty Name="isConfirmed" ColumnName="isConfirmed" />
+          <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+          <ScalarProperty Name="enabledNotif" ColumnName="enabledNotif" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="sharedposts" TypeName="ifollowdatabaseModel.sharedposts" StoreEntitySet="sharedposts">
+      <EndProperty Name="posts">
+        <ScalarProperty Name="id" ColumnName="id" />
+      </EndProperty>
+      <EndProperty Name="users">
+        <ScalarProperty Name="id" ColumnName="userId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
